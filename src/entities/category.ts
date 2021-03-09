@@ -3,7 +3,7 @@ import {Collection, getRepository} from "fireorm";
 
 @ObjectType()
 @Collection()
-export class Product {
+export class Category {
   @Field()
   id!: string;
 
@@ -12,12 +12,6 @@ export class Product {
 
   @Field()
   description!: string;
-
-  @Field()
-  price!: number;
-
-  @Field()
-  categoriesIds!: string[];
 }
 
-export const ProductRepository = getRepository(Product);
+export const CategoryRepository = getRepository(Category);

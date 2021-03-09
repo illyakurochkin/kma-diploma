@@ -5,6 +5,8 @@ import {buildSchema} from 'type-graphql';
 import {ApolloServer} from "apollo-server-express";
 import * as express from 'express';
 import {Express} from 'express';
+import {Firestore} from "@google-cloud/firestore";
+import * as fireorm from 'fireorm';
 
 const createSchema = async (): Promise<GraphQLSchema> => {
   return await buildSchema({
@@ -15,6 +17,7 @@ const createSchema = async (): Promise<GraphQLSchema> => {
 };
 
 export const createApolloServer = async (): Promise<ApolloServer> => {
+  fireorm.initialize(new Firestore());
   const schema = await createSchema();
 
   return new ApolloServer({

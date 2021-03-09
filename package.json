@@ -1,13 +1,15 @@
 {
   "name": "gcp-shop",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "watch": "nodemon --exec \"npm run start\" --ext \"ts,json\""
+    "watch": "cross-env GOOGLE_APPLICATION_CREDENTIALS=googleApplicationCredentials.json nodemon --exec \"npm run start\" --ext \"ts,json\""
   },
   "devDependencies": {
+    "class-validator": "^0.13.1",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.7",
     "ts-jest": "^26.5.3",
     "typescript": "^4.2.3"
@@ -17,6 +19,7 @@
     "apollo-server-cloud-functions": "^2.21.1",
     "apollo-server-express": "^2.21.1",
     "express": "^4.17.1",
+    "fireorm": "^0.20.0",
     "graphql": "^15.5.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1",

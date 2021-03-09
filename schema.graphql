@@ -3,6 +3,34 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CreateProductInput {
+  categoriesRefs: [String!]!
+  description: String!
+  name: String!
+  price: Float!
+}
+
+input GetProductsInput {
+  categoriesRefs: [String!] = []
+  compatibleProductsRefs: [String!] = []
+  maxPrice: Float
+  minPrice: Float
+  query: String
+}
+
+type Mutation {
+  createProduct(options: CreateProductInput!): Product!
+}
+
+type Product {
+  categoriesRefs: [String!]!
+  description: String!
+  id: String!
+  name: String!
+  price: Float!
+}
+
 type Query {
+  getProducts(options: GetProductsInput = {}): [Product!]!
   testQuery: String!
 }

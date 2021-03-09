@@ -3,21 +3,15 @@ import {Collection, getRepository} from "fireorm";
 
 @ObjectType()
 @Collection()
-export class Product {
+export class CompatibleGroup {
   @Field()
   id!: string;
-
-  @Field()
-  name!: string;
 
   @Field()
   description!: string;
 
   @Field()
-  price!: number;
-
-  @Field()
-  categoriesIds!: string[];
+  productsIds!: string[];
 }
 
-export const ProductRepository = getRepository(Product);
+export const CompatibleGroupRepository = getRepository(CompatibleGroup);
