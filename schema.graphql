@@ -3,27 +3,46 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Category {
+  description: String!
+  id: String!
+  name: String!
+  parentCategoryId: String
+}
+
+input CreateCategoryInput {
+  description: String!
+  name: String!
+  parentCategoryId: String
+}
+
 input CreateProductInput {
-  categoriesRefs: [String!]!
+  categoriesIds: [String!]!
   description: String!
   name: String!
   price: Float!
 }
 
+input GetCategoriesInput {
+  parentCategoryId: String!
+}
+
 input GetProductsInput {
-  categoriesRefs: [String!] = []
-  compatibleProductsRefs: [String!] = []
+  categoriesIds: [String!] = []
+  compatibleProductsIds: [String!] = []
   maxPrice: Float
   minPrice: Float
   query: String
 }
 
 type Mutation {
+  createCategory(options: CreateCategoryInput!): Category!
   createProduct(options: CreateProductInput!): Product!
+  deleteProduct(productId: String!): Void
 }
 
 type Product {
-  categoriesRefs: [String!]!
+  categoriesIds: [String!]!
   description: String!
   id: String!
   name: String!
@@ -31,6 +50,10 @@ type Product {
 }
 
 type Query {
+  getCategories(options: GetCategoriesInput = {}): [Category!]!
   getProducts(options: GetProductsInput = {}): [Product!]!
   testQuery: String!
 }
+
+"""Represents NULL values"""
+scalar Void

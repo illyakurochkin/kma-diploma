@@ -16,7 +16,7 @@ export class Product {
   @Field()
   price!: number;
 
-  @Field()
+  @Field(() => [String])
   categoriesIds!: string[];
 }
 

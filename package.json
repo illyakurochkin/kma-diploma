@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "watch": "cross-env GOOGLE_APPLICATION_CREDENTIALS=googleApplicationCredentials.json nodemon --exec \"npm run start\" --ext \"ts,json\""
+    "watch": "cross-env ADMIN_EMAIL=illya.kurochkin@gmail.com CLIENT_ID=407408718192.apps.googleusercontent.com GOOGLE_APPLICATION_CREDENTIALS=googleApplicationCredentials.json nodemon --exec \"npm run start\" --ext \"ts,json\""
   },
   "devDependencies": {
     "class-validator": "^0.13.1",
@@ -20,7 +20,9 @@
     "apollo-server-express": "^2.21.1",
     "express": "^4.17.1",
     "fireorm": "^0.20.0",
+    "google-auth-library": "^7.0.2",
     "graphql": "^15.5.0",
+    "graphql-scalars": "^1.9.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1",
     "type-graphql": "^1.1.1"

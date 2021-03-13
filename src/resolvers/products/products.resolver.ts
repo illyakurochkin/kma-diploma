@@ -1,7 +1,9 @@
-import {Arg, Mutation, Query, Resolver} from "type-graphql";
+import {Arg, Mutation, Query, Resolver, Authorized} from "type-graphql";
+import {VoidResolver} from 'graphql-scalars';
 import {Product} from "../../entities/product";
 import {CreateProductInput, GetProductsInput} from "./inputTypes";
 import ProductsService from "../../services/products";
+import {Role} from "../authorization";
 
 @Resolver()
 export default class ProductsResolver {
@@ -10,6 +12,7 @@ export default class ProductsResolver {
     return Promise.resolve('hello world');
   }
 
+  @Authorized(Role.ADMIN)
   @Query(() => [Product])
   async getProducts(
     @Arg('options', {nullable: true, defaultValue: {}}) options: GetProductsInput
@@ -24,5 +27,8 @@ export default class ProductsResolver {
     return ProductsService.createProduct(options);
   }
 
-  @Mutation(() => [VoidType])
+  @Mutation(() => VoidResolver, {nullable: true})
+  async deleteProduct(@Arg('productId') productId: string): Promise<void> {
+    return ProductsService.deleteProduct(productId);
+  }
 }

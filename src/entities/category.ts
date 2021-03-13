@@ -7,6 +7,9 @@ export class Category {
   @Field()
   id!: string;
 
+  @Field({nullable: true})
+  parentCategoryId?: string;
+
   @Field()
   name!: string;
 

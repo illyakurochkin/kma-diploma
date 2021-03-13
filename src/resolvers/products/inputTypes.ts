@@ -11,10 +11,11 @@ export class GetProductsInput {
   @Field({nullable: true})
   maxPrice?: number;
 
-  @Field({nullable: true, defaultValue: []})
+  @Field(() => [String], {nullable: true, defaultValue: []})
   categoriesIds?: string[];
 
-  @Field({nullable: true, defaultValue: []})
+
+  @Field(() => [String], {nullable: true, defaultValue: []})
   compatibleProductsIds?: string[];
 }
 
@@ -29,6 +30,6 @@ export class CreateProductInput {
   @Field()
   price!: number;
 
-  @Field()
-  categoryIds!: string[];
+  @Field(() => [String])
+  categoriesIds!: string[];
 }
