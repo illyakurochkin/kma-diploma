@@ -10,7 +10,7 @@ export class CompatibleGroup {
   @Field()
   description!: string;
 
-  @Field()
+  @Field(() => [String])
   productsIds!: string[];
 }
 

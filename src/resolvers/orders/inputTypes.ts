@@ -1,6 +1,14 @@
-import {Field, InputType} from "type-graphql";
+import {Field, InputType, Int} from "type-graphql";
 import {IsEmail} from "class-validator";
-import {OrderItem} from "../../entities/order";
+
+@InputType()
+class OrderItemInput {
+  @Field()
+  productId!: string;
+
+  @Field(() => Int)
+  amount!: number;
+}
 
 @InputType()
 export class CreateOrderInput {
@@ -8,7 +16,7 @@ export class CreateOrderInput {
   @IsEmail()
   email!: string;
 
-  @Field()
-  items!: OrderItem[];
+  @Field(() => [OrderItemInput])
+  items!: OrderItemInput[];
 }
 

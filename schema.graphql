@@ -10,18 +10,35 @@ type Category {
   parentCategoryId: String
 }
 
+type CompatibleGroup {
+  description: String!
+  id: String!
+  productsIds: [String!]!
+}
+
 input CreateCategoryInput {
   description: String!
   name: String!
   parentCategoryId: String
 }
 
+input CreateOrderInput {
+  email: String!
+  items: [OrderItemInput!]!
+}
+
 input CreateProductInput {
   categoriesIds: [String!]!
   description: String!
   name: String!
+  photo: String!
   price: Float!
 }
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
 
 input GetCategoriesInput {
   parentCategoryId: String!
@@ -37,8 +54,29 @@ input GetProductsInput {
 
 type Mutation {
   createCategory(options: CreateCategoryInput!): Category!
+  createOrder(options: CreateOrderInput!): Order!
   createProduct(options: CreateProductInput!): Product!
+  deleteCategory(categoryId: String!): Void
+  deleteOrder(orderId: String!): Void!
   deleteProduct(productId: String!): Void
+  updateCategory(options: UpdateCategoryInput!): Category!
+}
+
+type Order {
+  date: DateTime!
+  email: String!
+  id: String!
+  items: [OrderItem!]!
+}
+
+type OrderItem {
+  amount: Int!
+  productId: String!
+}
+
+input OrderItemInput {
+  amount: Int!
+  productId: String!
 }
 
 type Product {
@@ -46,13 +84,25 @@ type Product {
   description: String!
   id: String!
   name: String!
+  photo: String!
   price: Float!
 }
 
 type Query {
   getCategories(options: GetCategoriesInput = {}): [Category!]!
+  getCategoryById(categoryId: String!): Category!
+  getOrderById(orderId: String!): Order!
+  getOrders(email: String): [Order!]!
+  getProductById(productId: String!): Product!
   getProducts(options: GetProductsInput = {}): [Product!]!
   testQuery: String!
+}
+
+input UpdateCategoryInput {
+  description: String!
+  id: String!
+  name: String!
+  parentCategoryId: String
 }
 
 """Represents NULL values"""

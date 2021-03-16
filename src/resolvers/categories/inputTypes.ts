@@ -18,3 +18,17 @@ export class CreateCategoryInput {
   parentCategoryId?: string;
 }
 
+@InputType()
+export class UpdateCategoryInput {
+  @Field()
+  id!: string;
+
+  @Field({nullable: true})
+  parentCategoryId?: string;
+
+  @Field()
+  name!: string;
+
+  @Field()
+  description!: string;
+}

@@ -24,7 +24,7 @@ export class Order {
   @Field()
   date!: Date;
 
-  @Field()
+  @Field(() => [OrderItem])
   items!: OrderItem[];
 }
 

@@ -3,7 +3,7 @@ import {VoidResolver} from 'graphql-scalars';
 import {Role} from "../authorization";
 import {Category} from "../../entities/category";
 import CategoriesService from "../../services/categories";
-import {CreateCategoryInput, GetCategoriesInput} from "./inputTypes";
+import {CreateCategoryInput, GetCategoriesInput, UpdateCategoryInput} from "./inputTypes";
 import {CATEGORY_NOT_FOUNT} from "./errorMessages";
 
 @Resolver()
@@ -20,7 +20,7 @@ export default class CategoriesResolver {
   async getCategoryById(@Arg('categoryId') categoryId: string): Promise<Category> {
     const category = await CategoriesService.getCategoryById(categoryId);
 
-    if(!category) {
+    if (!category) {
       throw new Error(CATEGORY_NOT_FOUNT);
     }
 
@@ -36,7 +36,7 @@ export default class CategoriesResolver {
 
   @Authorized(Role.ADMIN)
   @Mutation(() => Category)
-  async updateCategory(@Arg('options') options: Category): Promise<Category> {
+  async updateCategory(@Arg('options') options: UpdateCategoryInput): Promise<Category> {
     return CategoriesService.updateCategory(options);
   }
 
