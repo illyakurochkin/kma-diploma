@@ -14,6 +14,9 @@ export class Product {
   description!: string;
 
   @Field()
+  photo!: string;
+
+  @Field()
   price!: number;
 
   @Field(() => [String])

@@ -17,3 +17,4 @@ export class CreateCategoryInput {
   @Field({nullable: true})
   parentCategoryId?: string;
 }
+

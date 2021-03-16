@@ -1,6 +1,7 @@
 import {PartialBy} from "fireorm";
 import {Product, ProductRepository} from "../entities/product";
 import {GetProductsInput} from "../resolvers/products/inputTypes";
+import {CompatibleGroup, CompatibleGroupRepository} from "../entities/compatibleGroup";
 
 const ProductsService = {
   async getProducts({
@@ -15,9 +16,20 @@ const ProductsService = {
       queryBuilder.whereArrayContainsAny('categoriesIds', categoriesIds);
     }
 
-    // if(compatibleProductsIds.length) {
-    // queryBuilder.whereArrayContainsAny('c', compatibleProductsIds);
-    // }
+    if(compatibleProductsIds.length) {
+      const compatibleGroups = await CompatibleGroupRepository
+        .whereArrayContainsAny('productsIds', compatibleProductsIds)
+        .find();
+
+      const productsIds = [...new Set(
+        compatibleGroups.reduce((accumulator: string[], compatibleGroup: CompatibleGroup) => [
+          ...accumulator,
+          ...compatibleGroup.productsIds
+        ], [])
+      )];
+
+      queryBuilder.whereIn('id', productsIds);
+    }
 
     const products = await queryBuilder.find();
 
@@ -28,6 +40,12 @@ const ProductsService = {
     console.log('products', filteredProducts);
 
     return filteredProducts;
+  },
+
+  async getProductById(productId: string): Promise<Product | null> {
+    return ProductRepository
+      .whereEqualTo('id', productId)
+      .findOne();
   },
 
   async createProduct(product: PartialBy<Product, 'id'>): Promise<Product> {

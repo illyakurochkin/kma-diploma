@@ -1,4 +1,5 @@
 import {Field, InputType} from "type-graphql";
+import {IsEmail} from "class-validator";
 
 @InputType()
 export class GetProductsInput {
@@ -29,6 +30,10 @@ export class CreateProductInput {
 
   @Field()
   price!: number;
+
+  @Field()
+  @IsEmail()
+  photo!: string;
 
   @Field(() => [String])
   categoriesIds!: string[];
