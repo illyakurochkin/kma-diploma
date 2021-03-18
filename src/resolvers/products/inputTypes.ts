@@ -1,5 +1,4 @@
 import {Field, InputType} from "type-graphql";
-import {IsEmail} from "class-validator";
 
 @InputType()
 export class GetProductsInput {
@@ -12,11 +11,13 @@ export class GetProductsInput {
   @Field({nullable: true})
   maxPrice?: number;
 
-  @Field(() => [String], {nullable: true, defaultValue: []})
+  @Field(() => [String],
+    {nullable: true, defaultValue: []})
   categoriesIds?: string[];
 
 
-  @Field(() => [String], {nullable: true, defaultValue: []})
+  @Field(() => [String],
+    {nullable: true, defaultValue: []})
   compatibleProductsIds?: string[];
 }
 
@@ -32,9 +33,31 @@ export class CreateProductInput {
   price!: number;
 
   @Field()
-  @IsEmail()
   photo!: string;
 
-  @Field(() => [String])
+  @Field(() => [String],
+    {nullable: true, defaultValue: []})
+  categoriesIds!: string[];
+}
+
+@InputType()
+export class UpdateProductInput {
+  @Field()
+  id!: string;
+
+  @Field()
+  name!: string;
+
+  @Field()
+  description!: string;
+
+  @Field()
+  photo!: string;
+
+  @Field()
+  price!: number;
+
+  @Field(() => [String],
+    {nullable: true, defaultValue: []})
   categoriesIds!: string[];
 }

@@ -1,18 +1,19 @@
-import {Arg, Authorized, Mutation, Query, Resolver} from "type-graphql";
+import {Arg, Authorized, FieldResolver, Mutation, Query, Resolver, Root} from "type-graphql";
 import {VoidResolver} from 'graphql-scalars';
 import {Role} from "../authorization";
 import {Category} from "../../entities/category";
 import CategoriesService from "../../services/categories";
 import {CreateCategoryInput, GetCategoriesInput, UpdateCategoryInput} from "./inputTypes";
 import {CATEGORY_NOT_FOUNT} from "./errorMessages";
+import {Product} from "../../entities/product";
+import ProductsService from "../../services/products";
 
-@Resolver()
+@Resolver(() => Category)
 export default class CategoriesResolver {
   @Query(() => [Category])
   async getCategories(
     @Arg('options', {nullable: true, defaultValue: {}}) options: GetCategoriesInput
   ): Promise<Category[]> {
-    console.log('options', options);
     return CategoriesService.getCategories(options.parentCategoryId);
   }
 
@@ -30,7 +31,6 @@ export default class CategoriesResolver {
   @Authorized(Role.ADMIN)
   @Mutation(() => Category)
   async createCategory(@Arg('options') options: CreateCategoryInput): Promise<Category> {
-    console.log('options', options);
     return CategoriesService.createCategory(options);
   }
 
@@ -44,5 +44,12 @@ export default class CategoriesResolver {
   @Mutation(() => VoidResolver, {nullable: true})
   async deleteCategory(@Arg('categoryId') categoryId: string): Promise<void> {
     return CategoriesService.deleteCategory(categoryId);
+  }
+
+  @FieldResolver(() => [Product])
+  async products(@Root() category: Category): Promise<Product[]> {
+    return ProductsService.getProducts({
+      categoriesIds: [category.id]
+    });
   }
 }

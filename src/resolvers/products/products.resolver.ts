@@ -1,24 +1,19 @@
-import {Arg, Authorized, Mutation, Query, Resolver} from "type-graphql";
+import {Arg, Authorized, FieldResolver, Mutation, Query, Resolver, Root} from "type-graphql";
 import {VoidResolver} from 'graphql-scalars';
 import {Role} from "../authorization";
 import {Product} from "../../entities/product";
 import ProductsService from "../../services/products";
-import {CreateProductInput, GetProductsInput} from "./inputTypes";
+import {CreateProductInput, GetProductsInput, UpdateProductInput} from "./inputTypes";
 import {PRODUCT_NOT_FOUND} from "./errorMessages";
+import {Category} from "../../entities/category";
+import CategoriesService from "../../services/categories";
 
-@Resolver()
+@Resolver(() => Product)
 export default class ProductsResolver {
-  // TODO remove test query
-  @Query(() => String)
-  async testQuery(): Promise<String> {
-    return Promise.resolve('hello world');
-  }
-
   @Query(() => [Product])
   async getProducts(
     @Arg('options', {nullable: true, defaultValue: {}}) options: GetProductsInput
   ): Promise<Product[]> {
-    console.log('options', options);
     return ProductsService.getProducts(options);
   }
 
@@ -36,8 +31,13 @@ export default class ProductsResolver {
   @Authorized(Role.ADMIN)
   @Mutation(() => Product)
   async createProduct(@Arg('options') options: CreateProductInput): Promise<Product> {
-    console.log('options', options);
     return ProductsService.createProduct(options);
+  }
+
+  @Authorized(Role.ADMIN)
+  @Mutation(() => Product)
+  async updateProduct(@Arg('options') options: UpdateProductInput): Promise<Product> {
+    return ProductsService.updateProduct(options);
   }
 
   @Authorized(Role.ADMIN)
@@ -50,5 +50,13 @@ export default class ProductsResolver {
     }
 
     return ProductsService.deleteProduct(productId);
+  }
+
+  @FieldResolver(() => [Category])
+  async categories(@Root() product: Product): Promise<Category[]> {
+    const promises = product.categoriesIds
+      .map(async (categoryId: string) => (await CategoriesService.getCategoryById(categoryId))!);
+
+    return Promise.all(promises);
   }
 }

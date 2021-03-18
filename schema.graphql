@@ -8,6 +8,7 @@ type Category {
   id: String!
   name: String!
   parentCategoryId: String
+  products: [Product!]!
 }
 
 type CompatibleGroup {
@@ -28,7 +29,7 @@ input CreateOrderInput {
 }
 
 input CreateProductInput {
-  categoriesIds: [String!]!
+  categoriesIds: [String!] = []
   description: String!
   name: String!
   photo: String!
@@ -60,6 +61,7 @@ type Mutation {
   deleteOrder(orderId: String!): Void!
   deleteProduct(productId: String!): Void
   updateCategory(options: UpdateCategoryInput!): Category!
+  updateProduct(options: UpdateProductInput!): Product!
 }
 
 type Order {
@@ -67,6 +69,7 @@ type Order {
   email: String!
   id: String!
   items: [OrderItem!]!
+  product: Product!
 }
 
 type OrderItem {
@@ -80,6 +83,7 @@ input OrderItemInput {
 }
 
 type Product {
+  categories: [Category!]!
   categoriesIds: [String!]!
   description: String!
   id: String!
@@ -95,7 +99,6 @@ type Query {
   getOrders(email: String): [Order!]!
   getProductById(productId: String!): Product!
   getProducts(options: GetProductsInput = {}): [Product!]!
-  testQuery: String!
 }
 
 input UpdateCategoryInput {
@@ -103,6 +106,15 @@ input UpdateCategoryInput {
   id: String!
   name: String!
   parentCategoryId: String
+}
+
+input UpdateProductInput {
+  categoriesIds: [String!] = []
+  description: String!
+  id: String!
+  name: String!
+  photo: String!
+  price: Float!
 }
 
 """Represents NULL values"""

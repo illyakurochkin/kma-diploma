@@ -33,13 +33,9 @@ const ProductsService = {
 
     const products = await queryBuilder.find();
 
-    const filteredProducts = products.filter((product: Product) => {
+    return products.filter((product: Product) => {
       return !query || product.name.toLocaleLowerCase().includes(query.toLowerCase());
     })
-
-    console.log('products', filteredProducts);
-
-    return filteredProducts;
   },
 
   async getProductById(productId: string): Promise<Product | null> {
@@ -49,9 +45,11 @@ const ProductsService = {
   },
 
   async createProduct(product: PartialBy<Product, 'id'>): Promise<Product> {
-    const createdProduct = await ProductRepository.create(product);
-    console.log('createdProduct', createdProduct);
-    return createdProduct;
+    return ProductRepository.create(product);
+  },
+
+  async updateProduct(product: Product): Promise<Product> {
+    return ProductRepository.update(product);
   },
 
   async deleteProduct(productId: string): Promise<void> {

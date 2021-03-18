@@ -1,9 +1,8 @@
 import {createExpressServer} from './app';
-import {getPort} from "./imports/envVariables";
 
 (async () => {
   const server = await createExpressServer();
-  const port = getPort();
+  const port = process.env.PORT || 8081;
   server.listen(port, () =>
     console.log(`Example app listening at port ${port}`));
 })();
