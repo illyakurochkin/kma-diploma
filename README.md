@@ -1,4 +1,9 @@
 # Shop GraphQL API
+
+## Playground
+
+https://graphic-tide-305412.ew.r.appspot.com/graphql
+
 ## Schema Types
 
 <details>

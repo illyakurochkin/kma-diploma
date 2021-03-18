@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "watch": "cross-env ADMIN_EMAIL=illya.kurochkin@gmail.com CLIENT_ID=407408718192.apps.googleusercontent.com GOOGLE_APPLICATION_CREDENTIALS=googleApplicationCredentials.json nodemon --exec \"npm run start\" --ext \"ts,json\"",
+    "deploy": "gcloud app deploy",
     "generate-readme": "graphql-markdown ./schema.graphql > README.md"
   },
   "devDependencies": {
