@@ -28,6 +28,10 @@ const ProductsService = {
         ], [])
       )];
 
+      if(!productsIds.length) {
+        return [];
+      }
+
       queryBuilder.whereIn('id', productsIds);
     }
 

@@ -19,12 +19,14 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
     * [Product](#product)
   * [Inputs](#inputs)
     * [CreateCategoryInput](#createcategoryinput)
+    * [CreateCompatibleGroupInput](#createcompatiblegroupinput)
     * [CreateOrderInput](#createorderinput)
     * [CreateProductInput](#createproductinput)
     * [GetCategoriesInput](#getcategoriesinput)
     * [GetProductsInput](#getproductsinput)
     * [OrderItemInput](#orderiteminput)
     * [UpdateCategoryInput](#updatecategoryinput)
+    * [UpdateCompatibleGroupInput](#updatecompatiblegroupinput)
     * [UpdateProductInput](#updateproductinput)
   * [Scalars](#scalars)
     * [Boolean](#boolean)
@@ -65,6 +67,26 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 <tr>
 <td colspan="2" align="right" valign="top">categoryId</td>
 <td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>getCompatibleGroupById</strong></td>
+<td valign="top"><a href="#compatiblegroup">CompatibleGroup</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">compatibleGroupId</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>getCompatibleGroups</strong></td>
+<td valign="top">[<a href="#compatiblegroup">CompatibleGroup</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productId</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
@@ -132,6 +154,16 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>createCompatibleGroup</strong></td>
+<td valign="top"><a href="#compatiblegroup">CompatibleGroup</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">options</td>
+<td valign="top"><a href="#createcompatiblegroupinput">CreateCompatibleGroupInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>createOrder</strong></td>
 <td valign="top"><a href="#order">Order</a>!</td>
 <td></td>
@@ -158,6 +190,16 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">categoryId</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deleteCompatibleGroup</strong></td>
+<td valign="top"><a href="#void">Void</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">compatibleGroupId</td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
@@ -243,6 +285,11 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>subcategories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -266,6 +313,11 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 <tr>
 <td colspan="2" valign="top"><strong>id</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -364,6 +416,16 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>compatibleGroups</strong></td>
+<td valign="top">[<a href="#compatiblegroup">CompatibleGroup</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>compatibleProducts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
@@ -417,6 +479,30 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 <tr>
 <td colspan="2" valign="top"><strong>parentCategoryId</strong></td>
 <td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### CreateCompatibleGroupInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productsIds</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
 <td></td>
 </tr>
 </tbody>
@@ -596,6 +682,35 @@ https://graphic-tide-305412.ew.r.appspot.com/graphql
 <tr>
 <td colspan="2" valign="top"><strong>parentCategoryId</strong></td>
 <td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### UpdateCompatibleGroupInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>id</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productsIds</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
 <td></td>
 </tr>
 </tbody>

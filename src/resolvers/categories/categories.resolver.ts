@@ -52,4 +52,9 @@ export default class CategoriesResolver {
       categoriesIds: [category.id]
     });
   }
+
+  @FieldResolver(() => [Category])
+  async subcategories(@Root() category: Category): Promise<Category[]> {
+    return CategoriesService.getCategories(category.id);
+  }
 }

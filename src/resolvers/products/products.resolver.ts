@@ -7,6 +7,8 @@ import {CreateProductInput, GetProductsInput, UpdateProductInput} from "./inputT
 import {PRODUCT_NOT_FOUND} from "./errorMessages";
 import {Category} from "../../entities/category";
 import CategoriesService from "../../services/categories";
+import CompatibleGroupsService from "../../services/compatibleGroups";
+import {CompatibleGroup} from "../../entities/compatibleGroup";
 
 @Resolver(() => Product)
 export default class ProductsResolver {
@@ -54,9 +56,22 @@ export default class ProductsResolver {
 
   @FieldResolver(() => [Category])
   async categories(@Root() product: Product): Promise<Category[]> {
-    const promises = product.categoriesIds
+    const promises = (product.categoriesIds || [])
       .map(async (categoryId: string) => (await CategoriesService.getCategoryById(categoryId))!);
 
     return Promise.all(promises);
+  }
+
+  @FieldResolver(() => [Product])
+  async compatibleProducts(@Root() product: Product): Promise<Product[]> {
+    return (await ProductsService.getProducts({
+      compatibleProductsIds: [product.id]
+    })).filter((compatibleProduct: Product) => compatibleProduct.id !== product.id);
+  }
+
+  @Authorized(Role.ADMIN)
+  @FieldResolver(() => [CompatibleGroup])
+  async compatibleGroups(@Root() product: Product): Promise<CompatibleGroup[]> {
+    return CompatibleGroupsService.getCompatibleGroups(product.id);
   }
 }

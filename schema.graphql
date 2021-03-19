@@ -9,11 +9,13 @@ type Category {
   name: String!
   parentCategoryId: String
   products: [Product!]!
+  subcategories: [Category!]!
 }
 
 type CompatibleGroup {
   description: String!
   id: String!
+  products: [Product!]!
   productsIds: [String!]!
 }
 
@@ -21,6 +23,11 @@ input CreateCategoryInput {
   description: String!
   name: String!
   parentCategoryId: String
+}
+
+input CreateCompatibleGroupInput {
+  description: String!
+  productsIds: [String!]!
 }
 
 input CreateOrderInput {
@@ -55,12 +62,15 @@ input GetProductsInput {
 
 type Mutation {
   createCategory(options: CreateCategoryInput!): Category!
+  createCompatibleGroup(options: CreateCompatibleGroupInput!): CompatibleGroup!
   createOrder(options: CreateOrderInput!): Order!
   createProduct(options: CreateProductInput!): Product!
   deleteCategory(categoryId: String!): Void
+  deleteCompatibleGroup(compatibleGroupId: String!): Void!
   deleteOrder(orderId: String!): Void!
   deleteProduct(productId: String!): Void
   updateCategory(options: UpdateCategoryInput!): Category!
+  updateCompatibleGroup(options: UpdateCompatibleGroupInput!): CompatibleGroup!
   updateProduct(options: UpdateProductInput!): Product!
 }
 
@@ -85,6 +95,8 @@ input OrderItemInput {
 type Product {
   categories: [Category!]!
   categoriesIds: [String!]!
+  compatibleGroups: [CompatibleGroup!]!
+  compatibleProducts: [Product!]!
   description: String!
   id: String!
   name: String!
@@ -95,6 +107,8 @@ type Product {
 type Query {
   getCategories(options: GetCategoriesInput = {}): [Category!]!
   getCategoryById(categoryId: String!): Category!
+  getCompatibleGroupById(compatibleGroupId: String!): CompatibleGroup!
+  getCompatibleGroups(productId: String): [CompatibleGroup!]!
   getOrderById(orderId: String!): Order!
   getOrders(email: String): [Order!]!
   getProductById(productId: String!): Product!
@@ -106,6 +120,12 @@ input UpdateCategoryInput {
   id: String!
   name: String!
   parentCategoryId: String
+}
+
+input UpdateCompatibleGroupInput {
+  description: String!
+  id: String!
+  productsIds: [String!]!
 }
 
 input UpdateProductInput {
